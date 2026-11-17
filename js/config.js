@@ -16,7 +16,7 @@ window.WEDDING = {
   venue: {
     name: 'Rozia Convention Centre',
     // Paste the VERIFIED Google Maps share link. QR code + "Get Directions" both use it.
-    mapsUrl: 'https://qr.link/9GTE1b',
+    mapsUrl: 'https://maps.app.goo.gl/HRC25r5roJX6kiCb7',
   },
 
   compliments: 'PT Group & Family',

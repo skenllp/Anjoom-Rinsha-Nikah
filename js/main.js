@@ -103,7 +103,6 @@
   });
 
   /* ───────── Venue: directions button ───────── */
-  $('venue-name').textContent = W.venue.name;
   var maps = $('btn-directions');
   if (W.venue.mapsUrl) maps.href = W.venue.mapsUrl;
   else { maps.removeAttribute('href'); maps.setAttribute('aria-disabled', 'true'); maps.setAttribute('role', 'link'); }
