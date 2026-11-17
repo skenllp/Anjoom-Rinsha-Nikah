@@ -67,9 +67,9 @@
   }
 
   /* ───────── Countdown (start of the calendar date, venue-local timezone) ───────── */
-  var target = new Date(W.date.iso + 'T00:00:00' + W.date.utcOffset).getTime();
+  var target = new Date(W.date.iso + 'T' + W.date.time24 + ':00' + W.date.utcOffset).getTime();
   var pad = function (n) { return String(n).padStart(2, '0'); };
-  $('cd-note').textContent = 'Counting down to the start of 26 December 2026 (12:00 am ' + W.date.timezoneLabel + '). The ceremony time is not yet announced.';
+  $('cd-note').textContent = 'Counting down to the Nikah — 26 December 2026, ' + W.date.time + ' (' + W.date.timezoneLabel + ').';
   function tick() {
     var diff = target - Date.now();
     if (diff <= 0) { $('countdown').hidden = true; $('cd-done').hidden = false; return false; }
@@ -82,19 +82,18 @@
   }
   if (tick()) { var cdTimer = setInterval(function () { if (!tick()) clearInterval(cdTimer); }, 1000); }
 
-  /* ───────── Add to calendar (all-day: no ceremony time supplied) ───────── */
-  var parts = W.date.iso.split('-').map(Number);
-  var ymd = function (d) { return d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()); };
-  var dStart = ymd(new Date(Date.UTC(parts[0], parts[1] - 1, parts[2])));
-  var dEnd = ymd(new Date(Date.UTC(parts[0], parts[1] - 1, parts[2] + 1)));
+  /* ───────── Add to calendar (9:30 AM start) ───────── */
+  var startMs = target, endMs = target + (W.date.durationHours || 1) * 3600000;
+  var utc = function (ms) { return new Date(ms).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'; };
+  var dStart = utc(startMs), dEnd = utc(endMs);
   var evTitle = 'Nikah of ' + W.groom.name + ' & ' + W.bride.name;
-  var evDetails = W.share.text + '\n\nWith best compliments from ' + W.compliments + '.';
+  var evDetails = W.share.text + '\n\nNikah at ' + W.date.time + '.\nWith best compliments from ' + W.compliments + '.';
   $('btn-gcal').href = 'https://calendar.google.com/calendar/render?' + new URLSearchParams({ action: 'TEMPLATE', text: evTitle, dates: dStart + '/' + dEnd, details: evDetails, location: W.venue.name }).toString();
   $('btn-ics').addEventListener('click', function () {
     var esc = function (s) { return s.replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;'); };
     var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Nikah Invitation//EN', 'CALSCALE:GREGORIAN', 'BEGIN:VEVENT',
       'UID:nikah-' + dStart + '@invitation', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
-      'DTSTART;VALUE=DATE:' + dStart, 'DTEND;VALUE=DATE:' + dEnd, 'SUMMARY:' + esc(evTitle), 'LOCATION:' + esc(W.venue.name),
+      'DTSTART:' + dStart, 'DTEND:' + dEnd, 'SUMMARY:' + esc(evTitle), 'LOCATION:' + esc(W.venue.name),
       'DESCRIPTION:' + esc(evDetails + (W.venue.mapsUrl ? '\n\nDirections: ' + W.venue.mapsUrl : '')), 'END:VEVENT', 'END:VCALENDAR'];
     var url = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' }));
     var a = document.createElement('a'); a.href = url; a.download = 'anjoom-rinsha-nikah.ics';
@@ -103,6 +102,7 @@
   });
 
   /* ───────── Venue: directions button ───────── */
+  $('venue-name').textContent = W.venue.name;
   var maps = $('btn-directions');
   if (W.venue.mapsUrl) maps.href = W.venue.mapsUrl;
   else { maps.removeAttribute('href'); maps.setAttribute('aria-disabled', 'true'); maps.setAttribute('role', 'link'); }

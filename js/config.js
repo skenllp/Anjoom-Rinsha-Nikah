@@ -8,15 +8,18 @@ window.WEDDING = {
 
   date: {
     iso: '2026-12-26',
-    // ASSUMPTION: venue local time = India Standard Time. Countdown targets 00:00 on the date.
+    // ASSUMPTION: venue local time = India Standard Time. Countdown targets the Nikah time below.
     utcOffset: '+05:30',
     timezoneLabel: 'IST',
+    time: '9:30 AM',      // shown on the page
+    time24: '09:30',      // used for the countdown and calendar
+    durationHours: 1,     // calendar length only (no end time was supplied) — edit freely
   },
 
   venue: {
     name: 'Rozia Convention Centre',
     // Paste the VERIFIED Google Maps share link. QR code + "Get Directions" both use it.
-    mapsUrl: 'https://maps.app.goo.gl/HRC25r5roJX6kiCb7',
+    mapsUrl: 'https://qr.link/9GTE1b',
   },
 
   compliments: 'PT Group & Family',

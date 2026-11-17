@@ -21,10 +21,10 @@ Open `js/config.js` and paste the share link into `venue.mapsUrl`:
 ```js
 venue: { name: 'Rozia Convention Centre', mapsUrl: 'https://maps.app.goo.gl/XXXXXXXX' }
 ```
-The **Get Directions** button uses it. The venue section uses the Rozia photo as a full-section background (`assets/images/venue.jpg`). Currently set to https://maps.app.goo.gl/HRC25r5roJX6kiCb7.
+The **Get Directions** button uses it. The venue section shows the Rozia photo (`assets/images/venue.jpg`). Currently set to the link decoded from the printed invitation's QR (https://qr.link/9GTE1b) — a redirect from a QR service. Replace it with a direct Google Maps link if you can.
 
 ## Other settings (`js/config.js`)
-- `date.utcOffset` — assumed `+05:30` (IST) for the countdown; change if the venue is elsewhere.
+- `date.time` / `time24` — Nikah time (9:30 AM). `utcOffset` is assumed `+05:30` (IST); `durationHours` only sets the calendar entry length.
 - `wishes.endpoint` — a form service URL (Formspree, Web3Forms…) for real storage.
 - `wishes.whatsappNumber` — digits with country code to receive blessings via WhatsApp.
 - If neither is set, the form says clearly that nothing was sent.
