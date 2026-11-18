@@ -31,7 +31,7 @@ h1,h2,h3,p{margin:0}
 /* Ornaments */
 .divider{width:min(86%,360px);aspect-ratio:2172/300;object-fit:cover;object-position:50% 47%;margin-inline:auto}
 .divider.flip{transform:scaleY(-1)}
-.basmala{aspect-ratio:2172/480;object-fit:cover;object-position:50% 50%}
+.basmala{width:min(75%,320px);height:auto;object-fit:contain;object-position:center}
 .corner{position:absolute;width:var(--cw,60cqw);pointer-events:none;z-index:1}
 .corner img{width:100%;height:auto}
 .corner-tl{top:0;left:0}.corner-br{bottom:0;right:0}.corner-bl{bottom:0;left:0}
@@ -47,7 +47,7 @@ h1,h2,h3,p{margin:0}
 
 /* Hero */
 .hero{padding:max(env(safe-area-inset-top),18px) 0 max(env(safe-area-inset-bottom),18px)}
-.hero .basmala{width:44cqw;margin:0 0 1.5cqw}
+.hero .basmala{width:min(70cqw,280px);margin:0 0 2cqw}
 .hero .d1{width:40cqw;margin:0 0 1cqw}
 .hero .d2{width:46cqw;margin:5cqw 0 3cqw}
 .hero .lbl{font-size:3.3cqw;letter-spacing:.34em;margin:0 0 3cqw}

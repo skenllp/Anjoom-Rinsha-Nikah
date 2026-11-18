@@ -23,14 +23,24 @@
     try { video.pause(); } catch (e) {}
     setPhase('site');
     playHero();
-    if (audio && !userMuted) audio.play().catch(function () { /* blocked: guest can use the toggle */ });
+    if (audio && !userMuted) {
+      audio.play().catch(function (err) { 
+        console.log('Audio play after video blocked:', err);
+        // Audio button remains visible for manual control
+      });
+    }
     timers.push(setTimeout(function () { stage.classList.remove('on'); }, 1300));
   }
   function start() {
     clearTimers();
     stage.classList.remove('on');
     // The song starts the moment the guest taps (a user gesture, so every phone allows it) and keeps playing.
-    if (audio && audio.paused && !userMuted) audio.play().catch(function () {});
+    if (audio && audio.paused && !userMuted) {
+      audio.play().catch(function (err) { 
+        console.log('Audio autoplay blocked:', err);
+        // Audio button is visible, user can manually start it
+      });
+    }
     setPhase('playing');
     try { video.currentTime = 0; } catch (e) {}
     video.muted = true; // the song is the soundtrack from the first tap
@@ -137,7 +147,9 @@
 
   /* ───────── Background music (starts after the opening; toggle always available) ───────── */
   if (W.audio && W.audio.src) {
-    audio = new Audio(W.audio.src); audio.loop = true; audio.preload = 'auto'; audio.volume = 0.6;
+    audio = new Audio(W.audio.src); audio.loop = true; audio.preload = 'auto'; audio.volume = 0.75;
+    // Ensure audio can play by loading it early
+    audio.load();
     var ab = $('audio-btn'); ab.hidden = false;
     var setUI = function (on) { ab.setAttribute('aria-pressed', on); ab.setAttribute('aria-label', on ? 'Mute music' : 'Play music'); ab.textContent = on ? '♪' : '♫'; ab.style.opacity = on ? '1' : '.75'; };
     audio.addEventListener('play', function () { setUI(true); });
