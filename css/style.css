@@ -89,11 +89,87 @@ h1,h2,h3,p{margin:0}
 .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
 
 /* Venue */
-.venue{gap:22px}
-.venue h2{font-size:clamp(19px,5.6vw,25px);letter-spacing:.16em;color:var(--gold);line-height:1.4;text-wrap:balance}
-.venue-card{position:relative;width:min(100%,430px);margin:0;padding:10px;background:rgba(248,245,236,.88);border:1px solid var(--champagne);border-radius:999px 999px 12px 12px/260px 260px 12px 12px;box-shadow:0 22px 44px -28px rgba(57,59,41,.6)}
-.venue-card::after{content:'';position:absolute;inset:5px;border:1px solid rgba(200,178,125,.55);border-radius:inherit;pointer-events:none}
-.venue-card img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:56% 50%;border-radius:inherit;border-radius:999px 999px 6px 6px/250px 250px 6px 6px}
+.venue-hero{
+  position:relative;
+  background:url('../assets/images/venue.jpg') center/cover no-repeat;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  isolation:isolate;
+}
+.venue-hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(30,35,40,.65) 0%,rgba(30,35,40,.35) 40%,rgba(30,35,40,.25) 60%,rgba(30,35,40,.55) 100%);
+  z-index:0;
+}
+.venue-overlay{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  padding:clamp(72px,12svh,120px) 26px;
+  text-align:center;
+}
+.venue-label{
+  font-family:Cinzel,serif;
+  font-size:clamp(11px,3vw,14px);
+  letter-spacing:.45em;
+  padding-left:.45em;
+  color:#c8b27d;
+  font-weight:400;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.venue-rozia{
+  font-size:clamp(72px,18vw,110px);
+  color:#ffffff;
+  text-shadow:0 3px 16px rgba(0,0,0,.5),0 1px 4px rgba(0,0,0,.3);
+  line-height:.95;
+  margin:0;
+}
+.venue-subtitle{
+  font-family:Cinzel,serif;
+  font-size:clamp(16px,4.2vw,24px);
+  letter-spacing:.38em;
+  padding-left:.38em;
+  color:#ffffff;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);
+  font-weight:400;
+  text-transform:uppercase;
+  margin-bottom:clamp(80px,20vh,160px);
+}
+.venue-date{
+  font-size:clamp(20px,5.2vw,28px);
+  color:#ffffff;
+  font-style:italic;
+  font-weight:500;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);
+  margin-bottom:20px;
+  line-height:1.4;
+}
+.btn-venue{
+  border:2px solid rgba(248,245,236,.75);
+  color:#ffffff;
+  background:rgba(57,59,41,.25);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  padding:16px 36px;
+  font-size:13px;
+  letter-spacing:.28em;
+  text-shadow:0 1px 3px rgba(0,0,0,.3);
+  box-shadow:0 4px 24px rgba(0,0,0,.3);
+}
+.btn-venue:hover{
+  background:rgba(248,245,236,.95);
+  color:var(--olive);
+  text-shadow:none;
+  border-color:rgba(248,245,236,.95);
+}
 
 /* Wishes */
 .wishes h2{font-size:clamp(34px,10vw,44px);font-weight:500;font-style:italic;color:var(--gold)}
