@@ -144,5 +144,16 @@
     audio.addEventListener('pause', function () { setUI(false); });
     ab.addEventListener('click', function () { userMuted = !audio.paused; if (audio.paused) audio.play().catch(function () {}); else audio.pause(); });
     setUI(false);
+    // Fallback: if the first play() was blocked or failed, retry on the guest's next tap/scroll/key.
+    var retry = function (ev) {
+      if (ab.contains(ev.target)) return; // the toggle button handles itself
+      if (userMuted) return cleanup();
+      if (!audio.paused) return cleanup();
+      audio.load && audio.readyState === 0 && audio.load();
+      audio.play().then(cleanup).catch(function () {});
+    };
+    var evs = ['pointerdown', 'touchend', 'click', 'keydown'];
+    var cleanup = function () { evs.forEach(function (e) { document.removeEventListener(e, retry, true); }); };
+    evs.forEach(function (e) { document.addEventListener(e, retry, true); });
   }
 })();
